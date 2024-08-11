@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { v4 as uuidv4 } from 'uuid';
+
 
 function Manager() {
   const ref = useRef();
@@ -17,9 +19,36 @@ function Manager() {
 
   const savePassword = () => {
     console.log(form);
-    setpasswordArray([...passwordArray, form]);
-    localStorage.setItem("passwords", JSON.stringify([...passwordArray, form]));
+    setpasswordArray([...passwordArray, {...form, id: uuidv4()}]);
+    localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form, id: uuidv4()}]));
     console.log([...passwordArray, form]);
+    setform({ site: " ", username: "", password: "" })
+    toast("Password saved!", {
+      position: "top-right",
+      theme:"dark"
+    });
+  };
+  const deletePassword = (id) => {
+    let c = confirm("Do you really want to delete?");
+    if(c){
+
+      setpasswordArray(passwordArray.filter(item=>item.id!==id));
+      localStorage.setItem("passwords", JSON.stringify(passwordArray.filter(item=>item.id!==id)));
+      console.log([...passwordArray, form]);
+    }
+    toast("Password deleted!", {
+      position: "top-right",
+      theme:"dark"
+    });
+  };
+  const editPassword = (id) => {
+    console.log("Edit id ", id);
+    setform(passwordArray.filter(i=>i.id===id)[0])
+    setpasswordArray(passwordArray.filter(item=>item.id!==id));
+    toast("Password Edited!", {
+      position: "top-right",
+      theme:"dark"
+    });
   };
   const showPassword = () => {
     passwordRef.current.type = "password";
@@ -43,7 +72,8 @@ function Manager() {
   };
   const notify = () => {
     toast("Copied to Clipboard!", {
-      position: "bottom-left",
+      position: "top-right",
+      theme:"dark"
     });
   };
   return (
@@ -53,11 +83,11 @@ function Manager() {
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
       </div>
 
-      <div className=" mycontainer">
+      <div className="md:mycontainer">
         <h1 className="text-4xl font-bold text-center">
-          <span className="text-purple-200 font-bold"> &lt;</span>
+          <span className="text-purple-800 font-bold"> &lt;</span>
           Ankita
-          <span className="text-purple-200 font-bold">Password/&gt;</span>
+          <span className="text-purple-800 font-bold">Password/&gt;</span>
         </h1>
         <p className="text-purple-800 text-lg text-center">
           Your own password manager
@@ -72,7 +102,7 @@ function Manager() {
             onChange={handleChange}
             className="rounded-full border border-purple-800 w-full text-black  p-4 py-1"
           />
-          <div className="flex w-full justify-between gap-4">
+          <div className="flex flex-col md:flex-row w-full justify-between gap-4">
             <input
               value={form.username}
               type="text"
@@ -185,14 +215,14 @@ function Manager() {
                       </td>
                       <td className=" py-2 border border-white text-center">
                         <div className="flex items-center justify-center">
-                          <span className="cursor-pointer mx-1">
+                          <span className="cursor-pointer mx-1" onClick={()=> editPassword(item.id)}>
                             <lord-icon
                               src="https://cdn.lordicon.com/oqaajvyl.json"
                               trigger="hover"
                               colors="primary:#000000,secondary:#6c16c7"
                             ></lord-icon>{" "}
                           </span>
-                          <span className="cursor-pointer mx-1">
+                          <span className="cursor-pointer mx-1" onClick={()=>deletePassword(item.id)}>
                           <lord-icon
                             src="https://cdn.lordicon.com/vlnvqvew.json"
                             trigger="hover"
