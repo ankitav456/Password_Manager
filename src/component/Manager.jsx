@@ -18,15 +18,22 @@ function Manager() {
   }, []);
 
   const savePassword = () => {
-    console.log(form);
-    setpasswordArray([...passwordArray, {...form, id: uuidv4()}]);
-    localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form, id: uuidv4()}]));
-    console.log([...passwordArray, form]);
-    setform({ site: " ", username: "", password: "" })
-    toast("Password saved!", {
-      position: "top-right",
-      theme:"dark"
-    });
+    if(form.site.length > 3 && form.password.length>3 && form.username.length>3){
+
+      setpasswordArray([...passwordArray, {...form, id: uuidv4()}]);
+      localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form, id: uuidv4()}]));
+      console.log([...passwordArray, form]);
+      setform({ site: " ", username: "", password: "" })
+      toast("Password saved!", {
+        position: "top-right",
+        theme:"dark"
+      });
+    }else{
+      toast("Password not saved!", {
+        position: "top-right",
+        theme:"dark"
+      });
+    }
   };
   const deletePassword = (id) => {
     let c = confirm("Do you really want to delete?");
@@ -83,7 +90,7 @@ function Manager() {
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
       </div>
 
-      <div className="md:mycontainer">
+      <div className=" mt-7 md:mycontainer">
         <h1 className="text-4xl font-bold text-center">
           <span className="text-purple-800 font-bold"> &lt;</span>
           Ankita
@@ -153,7 +160,7 @@ function Manager() {
           <h2 className="font-bold text-2xl py-4">Your Password</h2>
           {passwordArray.length === 0 && <div>No Passwords to Show</div>}
           {passwordArray.length != 0 && (
-            <table class="table-auto w-full rounded-lg overflow-hidden">
+            <table class="mb-4 table-auto w-full rounded-lg overflow-hidden">
               <thead className="bg-purple-900 text-white">
                 <tr>
                   <th className="py-2">Site </th>
