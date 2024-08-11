@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Manager() {
   const ref = useRef();
@@ -20,23 +22,33 @@ function Manager() {
     console.log([...passwordArray, form]);
   };
   const showPassword = () => {
-    passwordRef.current.type ="password"
+    passwordRef.current.type = "password";
     console.log(ref.current.src);
 
     if (ref.current.src.includes("view.png")) {
       ref.current.src = "hide.png";
-        passwordRef.current.type ="text"
+      passwordRef.current.type = "text";
     } else {
       ref.current.src = "view.png";
-        passwordRef.current.type ="password"
+      passwordRef.current.type = "password";
     }
   };
 
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });
   };
+
+  const copyText = (text) => {
+    navigator.clipboard.writeText(text);
+  };
+  const notify = () => {
+    toast("Copied to Clipboard!", {
+      position: "bottom-left",
+    });
+  };
   return (
     <>
+      <ToastContainer />
       <div className="absolute top-0 -z-10 h-full w-full bg-white">
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
       </div>
@@ -72,7 +84,7 @@ function Manager() {
             />
             <div className="relative">
               <input
-              ref={passwordRef}
+                ref={passwordRef}
                 value={form.password}
                 type="password"
                 placeholder="Enter Password"
@@ -117,21 +129,77 @@ function Manager() {
                   <th className="py-2">Site </th>
                   <th className="py-2">Username</th>
                   <th className="py-2">Password</th>
+                  <th className="py-2">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-purple-100">
                 {passwordArray.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td className="py-2 border flex items-center justify-center border-white text-center ">
-                        <a href={item.site} target="_blank">{item.site}</a>
-                        <img src="copy.png" alt="Copy" width={20} className="cursor-pointer"/>
+                      <td className="py-2 border  border-white text-center ">
+                        <div className="flex items-center justify-center ">
+                          <a href={item.site} target="_blank">
+                            {item.site}
+                          </a>
+                          <img
+                            src="copy.png"
+                            alt="Copy"
+                            width={20}
+                            className="cursor-pointer"
+                            onClick={() => {
+                              copyText(item.site);
+                              notify();
+                            }}
+                          />
+                        </div>
                       </td>
-                      <td className=" py-2 border border-white text-center w-32">
-                        {item.username}
+                      <td className=" py-2 border border-white text-center ">
+                        <div className="flex items-center justify-center">
+                          <span>{item.username}</span>
+                          <img
+                            src="copy.png"
+                            alt="Copy"
+                            width={20}
+                            className="cursor-pointer"
+                            onClick={() => {
+                              copyText(item.username);
+                              notify();
+                            }}
+                          />
+                        </div>
                       </td>
-                      <td className=" py-2 border border-white text-center w-32">
-                        {item.password}
+                      <td className=" py-2 border border-white text-center">
+                        <div className="flex items-center justify-center">
+                          <span> {item.password}</span>
+                          <img
+                            src="copy.png"
+                            alt="Copy"
+                            width={20}
+                            className="cursor-pointer"
+                            onClick={() => {
+                              copyText(item.password);
+                              notify();
+                            }}
+                          />
+                        </div>
+                      </td>
+                      <td className=" py-2 border border-white text-center">
+                        <div className="flex items-center justify-center">
+                          <span className="cursor-pointer mx-1">
+                            <lord-icon
+                              src="https://cdn.lordicon.com/oqaajvyl.json"
+                              trigger="hover"
+                              colors="primary:#000000,secondary:#6c16c7"
+                            ></lord-icon>{" "}
+                          </span>
+                          <span className="cursor-pointer mx-1">
+                          <lord-icon
+                            src="https://cdn.lordicon.com/vlnvqvew.json"
+                            trigger="hover"
+                            colors="primary:#000000,secondary:#6c16c7"
+                          ></lord-icon>
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   );
