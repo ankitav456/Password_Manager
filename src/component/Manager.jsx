@@ -35,6 +35,7 @@ function Manager() {
       });
     }
   };
+  
   const deletePassword = (id) => {
     let c = confirm("Do you really want to delete?");
     if(c){
