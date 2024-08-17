@@ -35,7 +35,7 @@ function Manager() {
       });
     }
   };
-  
+
   const deletePassword = (id) => {
     let c = confirm("Do you really want to delete?");
     if(c){
@@ -91,7 +91,7 @@ function Manager() {
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
       </div>
 
-      <div className=" mt-7 md:mycontainer">
+      <div className=" mt-14 md:mycontainer">
         <h1 className="text-4xl font-bold text-center">
           <span className="text-purple-800 font-bold"> &lt;</span>
           Ankita
