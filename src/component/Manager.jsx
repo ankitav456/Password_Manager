@@ -139,7 +139,6 @@ function Manager() {
             </p>
           )}
           <div className="flex flex-col md:flex-row w-full justify-between gap-4">
-            
             <div className="w-[70%]">
               <input
                 value={form.username}
@@ -185,6 +184,7 @@ function Manager() {
                   className="mt-2 mr-4"
                   width={20}
                   height={20}
+                  title="Show/Hide Password"
                 />
               </span>
             </div>
@@ -231,6 +231,7 @@ function Manager() {
                           width={20}
                           className="cursor-pointer"
                           onClick={() => copyText(item.site)}
+                          title="Copy Site URL"
                         />
                       </div>
                     </td>
@@ -243,6 +244,7 @@ function Manager() {
                           width={20}
                           className="cursor-pointer"
                           onClick={() => copyText(item.username)}
+                          title="Copy Username"
                         />
                       </div>
                     </td>
@@ -255,6 +257,7 @@ function Manager() {
                           width={20}
                           className="cursor-pointer"
                           onClick={() => copyText(item.password)}
+                          title="Copy Password"
                         />
                       </div>
                     </td>
@@ -263,6 +266,7 @@ function Manager() {
                         <span
                           className="cursor-pointer mx-1"
                           onClick={() => editPassword(item.id)}
+                          title="Edit Password"
                         >
                           <lord-icon
                             src="https://cdn.lordicon.com/oqaajvyl.json"
@@ -273,6 +277,7 @@ function Manager() {
                         <span
                           className="cursor-pointer mx-1"
                           onClick={() => deletePassword(item.id)}
+                          title="Delete Password"
                         >
                           <lord-icon
                             src="https://cdn.lordicon.com/vlnvqvew.json"
