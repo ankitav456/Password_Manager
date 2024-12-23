@@ -139,7 +139,7 @@ function Manager() {
             </p>
           )}
           <div className="flex flex-col md:flex-row w-full justify-between gap-4">
-            <div className="w-[70%]">
+            <div className="lg:w-[70%]">
               <input
                 value={form.username}
                 type="text"
@@ -156,7 +156,7 @@ function Manager() {
                 </p>
               )}
             </div>
-            <div className="relative w-[30%]">
+            <div className="relative lg:w-[30%]">
               <input
                 ref={passwordRef}
                 value={form.password}
